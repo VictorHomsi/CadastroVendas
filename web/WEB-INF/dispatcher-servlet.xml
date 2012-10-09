@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/> 
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" />
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsp/"
+          p:suffix=".jsp" />
+    
+    <bean id="urlMappingIndex" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="index.htm">indexController</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="urlMappingCadastroVenda" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="cadastroVendas.htm">cadastroVendasController</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="urlMappingVisualizarVendas" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="visualizarVendas.htm">visualizarVendasController</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="urlMappingCadastroProdutos" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="cadastroProdutos.htm">cadastroProdutosController</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="urlMappingCadastroUsuarios" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="cadastroUsuarios.htm">cadastroUsuariosController</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="usuario" class="br.cadastrovendas.model.Usuario" />
+    <bean id="produto" class="br.cadastrovendas.model.Produto" />
+    <bean id="venda" class="br.cadastrovendas.model.Venda" />
+    <bean id="vendaProduto" class="br.cadastrovendas.model.VendaProduto" />
+    
+    <bean name="cadastroVendasController" class="br.cadastrovendas.controller.CadastroVendasController">
+        <property name="usuarioDAO" ref="usuarioDAO" />
+        <property name="produtoDAO" ref="produtoDAO" />
+        <property name="vendaDAO" ref="vendaDAO" />
+        <property name="vendaProdutoDAO" ref="vendaProdutoDAO" />
+    </bean>
+    
+    <bean name="visualizarVendasController" class="br.cadastrovendas.controller.VisualizarVendasController">
+        <property name="vendaDAO" ref="vendaDAO" />
+    </bean>
+   
+    <bean name="indexController" class="br.cadastrovendas.controller.IndexController">
+        <property name="produtoDAO" ref="produtoDAO" />
+        <property name="vendaDAO" ref="vendaDAO" />
+        <property name="usuarioDAO" ref="usuarioDAO" />
+    </bean>
+    
+    <bean name="cadastroProdutosController" class="br.cadastrovendas.controller.CadastroProdutosController">
+        <property name="produtoDAO" ref="produtoDAO" />
+    </bean>
+    
+    <bean name="cadastroUsuariosController" class="br.cadastrovendas.controller.CadastroUsuariosController">
+        <property name="usuarioDAO" ref="usuarioDAO" />
+    </bean>
+
+
+</beans>
